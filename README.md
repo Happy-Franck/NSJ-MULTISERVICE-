@@ -1,36 +1,54 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# NSJ Multiservice
 
-## Getting Started
+Site vitrine **Next.js (App Router) + TypeScript** pour **NSJ Multiservice** —
+nettoyage, nettoyage extrême, débarras, rénovation, conciergerie, serrurerie,
+transport, bricolage, espaces verts et dératisation en Île-de-France.
 
-First, run the development server:
+Charte graphique **noir · orange · blanc**, thèmes clair/sombre, design bento/glass.
+
+## Fonctionnalités
+
+- 5 pages : Accueil, Services, Réalisations, À propos, Contact
+- Thème clair/sombre (sans flash au chargement)
+- Galerie avant/après interactive (slider + filtres + lightbox)
+- Carousel d'avis, compteurs animés, bouton WhatsApp flottant
+- **Formulaire de devis** : stockage **Supabase** + notification **email (SMTP)**
+
+## Démarrage
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+cp .env.example .env.local   # puis renseigner les valeurs
+npm run dev                  # http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Configuration du formulaire de devis
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 1. Supabase
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+1. Créer un projet sur [supabase.com](https://supabase.com).
+2. Dans **SQL Editor**, exécuter le contenu de [`supabase/schema.sql`](supabase/schema.sql)
+   (crée la table `devis`).
+3. Dans **Project Settings → API**, récupérer :
+   - `Project URL` → `NEXT_PUBLIC_SUPABASE_URL`
+   - `anon public` → `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+   - `service_role` (secret) → `SUPABASE_SERVICE_ROLE_KEY`
 
-## Learn More
+### 2. Email (SMTP / Nodemailer)
 
-To learn more about Next.js, take a look at the following resources:
+Renseigner `SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASS`, `SMTP_FROM`.
+Pour **Gmail**, créer un *mot de passe d'application* (App Password) et l'utiliser
+comme `SMTP_PASS`. Les demandes sont envoyées vers `DEVIS_TO_EMAIL`.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Scripts
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+| Commande | Description |
+| --- | --- |
+| `npm run dev` | Serveur de développement |
+| `npm run build` | Build de production |
+| `npm run start` | Lancer le build de production |
+| `npm run lint` | Linter ESLint |
 
-## Deploy on Vercel
+## Stack
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Next.js 16 · React 19 · TypeScript · Supabase · Nodemailer · CSS (tokens, sans Tailwind).
