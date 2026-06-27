@@ -108,6 +108,7 @@ export default function RootLayout({
     <html
       lang="fr"
       data-theme="dark"
+      data-scroll-behavior="smooth"
       className={`${inter.variable} ${sora.variable}`}
       suppressHydrationWarning
     >
@@ -119,7 +120,7 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body>
+      <body suppressHydrationWarning>
         <a href="#main" className="skip-link">
           Aller au contenu
         </a>
