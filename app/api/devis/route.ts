@@ -24,10 +24,16 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Requête invalide" }, { status: 400 });
   }
 
+  // Le téléphone est composé de l'indicatif pays + du numéro (champs séparés).
+  const dialCode = String(form.get("dialCode") ?? "").trim();
+  const rawPhone = String(form.get("telephone") ?? "").trim();
+  const telephone =
+    dialCode && rawPhone ? `${dialCode} ${rawPhone}` : rawPhone;
+
   const body = {
     nom: form.get("nom"),
     prenom: form.get("prenom"),
-    telephone: form.get("telephone"),
+    telephone,
     email: form.get("email"),
     adresse: form.get("adresse"),
     prestation: form.get("prestation"),

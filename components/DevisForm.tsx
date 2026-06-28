@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { prestations } from "@/lib/data";
+import { prestations, dialCodes } from "@/lib/data";
 
 type Status = "idle" | "loading" | "success" | "error";
 const REQUIRED = ["nom", "prenom", "telephone", "email", "prestation"] as const;
@@ -15,6 +15,7 @@ export default function DevisForm() {
   const [note, setNote] = useState("");
   const [errors, setErrors] = useState<Record<string, boolean>>({});
   const [fileInfo, setFileInfo] = useState(DEFAULT_FILE_INFO);
+  const [dialCode, setDialCode] = useState("+33");
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -58,6 +59,8 @@ export default function DevisForm() {
       }
     }
 
+    // dialCode + telephone sont envoyés séparément ; l'API les fusionne
+    // (ex. "+33 612345678") — robuste même en cas d'appel direct à l'API.
     setErrors({});
     setStatus("loading");
     setNote("Envoi en cours…");
@@ -73,6 +76,7 @@ export default function DevisForm() {
       );
       form.reset();
       setFileInfo(DEFAULT_FILE_INFO);
+      setDialCode("+33");
     } catch {
       setStatus("error");
       setNote(
@@ -98,7 +102,29 @@ export default function DevisForm() {
       <div className="form__row">
         <div className={cls("telephone")}>
           <label htmlFor="telephone">Téléphone *</label>
-          <input id="telephone" name="telephone" type="tel" autoComplete="tel" />
+          <div style={{ display: "flex", gap: 8 }}>
+            <select
+              name="dialCode"
+              aria-label="Indicatif pays"
+              value={dialCode}
+              onChange={(e) => setDialCode(e.target.value)}
+              style={{ width: "auto", flex: "0 0 auto" }}
+            >
+              {dialCodes.map((c) => (
+                <option key={c.iso} value={c.code} title={c.label}>
+                  {c.flag} {c.code}
+                </option>
+              ))}
+            </select>
+            <input
+              id="telephone"
+              name="telephone"
+              type="tel"
+              autoComplete="tel"
+              placeholder="6 12 34 56 78"
+              style={{ flex: 1 }}
+            />
+          </div>
         </div>
         <div className={cls("email")}>
           <label htmlFor="email">Email *</label>
