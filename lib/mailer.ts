@@ -32,13 +32,25 @@ function escapeHtml(s: string) {
     .replace(/>/g, "&gt;");
 }
 
-export async function sendDevisEmail(devis: DevisInput) {
+export type MailAttachment = {
+  filename: string;
+  content: Buffer;
+  contentType: string;
+};
+
+export async function sendDevisEmail(
+  devis: DevisInput,
+  extras?: { photoUrls?: string[]; attachments?: MailAttachment[] },
+) {
   const transport = getTransport();
   const to = process.env.DEVIS_TO_EMAIL || "solofonirina35@gmail.com";
   const from =
     process.env.SMTP_FROM ||
     process.env.SMTP_USER ||
     "devis@nsj-multiservice.local";
+
+  const photoUrls = extras?.photoUrls ?? [];
+  const attachments = extras?.attachments ?? [];
 
   const rows: [string, string][] = [
     ["Nom", devis.nom],
@@ -49,6 +61,20 @@ export async function sendDevisEmail(devis: DevisInput) {
     ["Prestation", devis.prestation],
     ["Message", devis.message || "—"],
   ];
+
+  const photosHtml =
+    photoUrls.length > 0
+      ? `<h3 style="margin:20px 0 8px;color:#14161a">Photos (${photoUrls.length})</h3>
+         <ul style="padding-left:18px">
+           ${photoUrls
+             .map(
+               (u, i) =>
+                 `<li><a href="${u}" target="_blank" rel="noopener">Photo ${i + 1}</a></li>`,
+             )
+             .join("")}
+         </ul>
+         <p style="color:#888;font-size:12px">Les photos sont aussi en pièces jointes.</p>`
+      : "";
 
   const html = `
     <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto">
@@ -64,12 +90,17 @@ export async function sendDevisEmail(devis: DevisInput) {
           )
           .join("")}
       </table>
+      ${photosHtml}
       <p style="color:#888;font-size:12px;margin-top:16px">
         Email automatique envoyé depuis le site nsj-multiservice.
       </p>
     </div>`;
 
-  const text = rows.map(([k, v]) => `${k}: ${v}`).join("\n");
+  const textLines = rows.map(([k, v]) => `${k}: ${v}`);
+  if (photoUrls.length > 0) {
+    textLines.push("", `Photos (${photoUrls.length}) :`, ...photoUrls);
+  }
+  const text = textLines.join("\n");
 
   await transport.sendMail({
     from: `"NSJ Multiservice" <${from}>`,
@@ -78,5 +109,6 @@ export async function sendDevisEmail(devis: DevisInput) {
     subject: `Nouvelle demande de devis — ${devis.prestation} (${devis.nom} ${devis.prenom})`,
     text,
     html,
+    attachments,
   });
 }

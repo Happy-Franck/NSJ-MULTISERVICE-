@@ -7,6 +7,8 @@ type Status = "idle" | "loading" | "success" | "error";
 const REQUIRED = ["nom", "prenom", "telephone", "email", "prestation"] as const;
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const DEFAULT_FILE_INFO = "JPG, PNG — plusieurs fichiers possibles";
+const MAX_FILES = 6;
+const MAX_SIZE = 5 * 1024 * 1024; // 5 Mo
 
 export default function DevisForm() {
   const [status, setStatus] = useState<Status>("idle");
@@ -39,16 +41,31 @@ export default function DevisForm() {
       return;
     }
 
+    // Validation des photos (optionnelles)
+    const photos = data
+      .getAll("photos")
+      .filter((f): f is File => f instanceof File && f.size > 0);
+    if (photos.length > MAX_FILES) {
+      setStatus("error");
+      setNote(`Maximum ${MAX_FILES} photos.`);
+      return;
+    }
+    for (const p of photos) {
+      if (p.size > MAX_SIZE) {
+        setStatus("error");
+        setNote(`Photo trop volumineuse (max 5 Mo) : ${p.name}`);
+        return;
+      }
+    }
+
     setErrors({});
     setStatus("loading");
     setNote("Envoi en cours…");
 
     try {
-      const res = await fetch("/api/devis", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(values),
-      });
+      // multipart/form-data : on envoie le FormData tel quel (champs + fichiers).
+      // Ne pas définir Content-Type manuellement (le navigateur gère la limite).
+      const res = await fetch("/api/devis", { method: "POST", body: data });
       if (!res.ok) throw new Error("request failed");
       setStatus("success");
       setNote(
