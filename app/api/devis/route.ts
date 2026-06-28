@@ -116,7 +116,9 @@ export async function POST(request: Request) {
   // --- Notification email (best-effort : la demande est déjà enregistrée) ---
   let emailSent = true;
   try {
-    await sendDevisEmail(devis, { photoUrls, attachments });
+    // Les photos sont envoyées en pièces jointes (affichées inline dans l'email).
+    // Les URLs Storage restent enregistrées en base (devis.photos) pour consultation.
+    await sendDevisEmail(devis, attachments);
   } catch (err) {
     emailSent = false;
     console.error("[devis] échec envoi email:", err);
