@@ -7,7 +7,10 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "mail": "maildev"
+    "mail": "maildev",
+    "db:link": "npx --yes supabase link --project-ref qptqsriowkttnamkvohn",
+    "db:new": "npx --yes supabase migration new",
+    "db:push": "npx --yes supabase db push"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.108.2",

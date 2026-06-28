@@ -1,7 +1,10 @@
 -- ============================================================
--- NSJ Multiservice — schéma Supabase
--- Table de stockage des demandes de devis.
--- À exécuter dans : Supabase Dashboard > SQL Editor.
+-- NSJ Multiservice — schéma Supabase (SNAPSHOT de référence)
+--
+-- ⚠️ La source de vérité est le dossier  supabase/migrations/
+--    (appliqué via `supabase db push`). Ce fichier n'est qu'un
+--    aperçu complet de l'état cible, pratique pour une install
+--    rapide via le SQL Editor.
 -- ============================================================
 
 create table if not exists public.devis (

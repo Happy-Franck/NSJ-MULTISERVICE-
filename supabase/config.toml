@@ -1,0 +1,4 @@
+# Configuration projet Supabase CLI.
+# project_id = nom local du projet (pas la référence du projet distant).
+# Pour relier au projet distant : supabase link --project-ref qptqsriowkttnamkvohn
+project_id = "nsj-multiservice"

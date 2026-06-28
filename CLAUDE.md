@@ -31,7 +31,10 @@ lib/
   devis.ts            Type + validation serveur d'une demande de devis
   supabase.ts         Client Supabase (service role, serveur uniquement)
   mailer.ts           Envoi email SMTP (Nodemailer)
-supabase/schema.sql   Schéma de la table `devis`
+supabase/
+  migrations/          Migrations versionnées (source de vérité) — `supabase db push`
+  schema.sql           Snapshot complet de référence (install rapide via SQL Editor)
+  config.toml          Config Supabase CLI
 ```
 
 ## Commandes
@@ -46,7 +49,11 @@ npx tsc --noEmit  # vérification de types
 ## Configuration (devis)
 
 1. Copier `.env.example` → `.env.local` et renseigner les valeurs.
-2. Créer un projet Supabase, puis exécuter `supabase/schema.sql` dans le SQL Editor.
+2. Créer un projet Supabase, puis appliquer le schéma :
+   - rapide : exécuter `supabase/schema.sql` dans le SQL Editor, ou
+   - migrations : `npm run db:link` puis `npm run db:push`.
+   Pour faire évoluer la base : ajouter une migration (`npm run db:new -- <nom>`),
+   jamais réécrire une table existante.
 3. Renseigner les identifiants SMTP (Gmail : utiliser un *App Password*).
    Les demandes sont envoyées à `DEVIS_TO_EMAIL` (défaut : solofonirina35@gmail.com).
 
