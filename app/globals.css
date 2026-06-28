@@ -244,6 +244,18 @@ input[type="file"] { display: none; }
 .note.is-success { color: #2ea66a; }
 .note.is-error { color: #e5484d; }
 
+/* Champ téléphone international (react-phone-number-input) — collé & thémé */
+.field .PhoneInput { display: flex; align-items: center; gap: 10px; background: var(--surface-2); border: 1.5px solid var(--border); border-radius: var(--radius-sm); padding: 0 14px; min-height: 48px; transition: border-color .2s, background .2s; }
+.field .PhoneInput:focus-within { border-color: var(--orange); }
+.field.is-error .PhoneInput { border-color: #e5484d; }
+.field .PhoneInputInput { flex: 1; min-width: 0; background: transparent; border: 0; outline: none; color: var(--text); font-family: var(--ff); font-size: 1rem; min-height: auto; padding: 13px 0; }
+.field .PhoneInputInput::placeholder { color: var(--text-soft); }
+.PhoneInputCountry { margin: 0; }
+.PhoneInputCountryIcon { box-shadow: none; }
+.PhoneInputCountrySelect { color: var(--text); }
+.PhoneInputCountrySelect option { color: #14161a; }
+.PhoneInputCountrySelectArrow { color: var(--text-soft); opacity: .8; }
+
 /* Contact */
 .contact { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 18px; }
 .contact__card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 28px 22px; text-align: center; transition: transform .3s var(--ease), box-shadow .3s var(--ease), border-color .3s; }

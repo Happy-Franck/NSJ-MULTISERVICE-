@@ -24,16 +24,12 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Requête invalide" }, { status: 400 });
   }
 
-  // Le téléphone est composé de l'indicatif pays + du numéro (champs séparés).
-  const dialCode = String(form.get("dialCode") ?? "").trim();
-  const rawPhone = String(form.get("telephone") ?? "").trim();
-  const telephone =
-    dialCode && rawPhone ? `${dialCode} ${rawPhone}` : rawPhone;
-
+  // Le téléphone est déjà au format international complet (ex. "+33 6 12 …"),
+  // composé côté client par le champ téléphone international.
   const body = {
     nom: form.get("nom"),
     prenom: form.get("prenom"),
-    telephone,
+    telephone: form.get("telephone"),
     email: form.get("email"),
     adresse: form.get("adresse"),
     prestation: form.get("prestation"),

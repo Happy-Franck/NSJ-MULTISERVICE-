@@ -81,31 +81,6 @@ export const reviews: Review[] = [
   { stars: 5, text: "Entretien régulier de nos espaces verts, toujours nickel. Une équipe fiable.", name: "Association Lien", meta: "Association · Yvelines" },
 ];
 
-// Indicatifs téléphoniques (pour le champ Téléphone du formulaire de devis).
-export type DialCode = { iso: string; flag: string; code: string; label: string };
-
-export const dialCodes: DialCode[] = [
-  { iso: "FR", flag: "🇫🇷", code: "+33", label: "France" },
-  { iso: "BE", flag: "🇧🇪", code: "+32", label: "Belgique" },
-  { iso: "CH", flag: "🇨🇭", code: "+41", label: "Suisse" },
-  { iso: "LU", flag: "🇱🇺", code: "+352", label: "Luxembourg" },
-  { iso: "MC", flag: "🇲🇨", code: "+377", label: "Monaco" },
-  { iso: "MG", flag: "🇲🇬", code: "+261", label: "Madagascar" },
-  { iso: "MA", flag: "🇲🇦", code: "+212", label: "Maroc" },
-  { iso: "DZ", flag: "🇩🇿", code: "+213", label: "Algérie" },
-  { iso: "TN", flag: "🇹🇳", code: "+216", label: "Tunisie" },
-  { iso: "SN", flag: "🇸🇳", code: "+221", label: "Sénégal" },
-  { iso: "CI", flag: "🇨🇮", code: "+225", label: "Côte d'Ivoire" },
-  { iso: "CM", flag: "🇨🇲", code: "+237", label: "Cameroun" },
-  { iso: "GB", flag: "🇬🇧", code: "+44", label: "Royaume-Uni" },
-  { iso: "DE", flag: "🇩🇪", code: "+49", label: "Allemagne" },
-  { iso: "ES", flag: "🇪🇸", code: "+34", label: "Espagne" },
-  { iso: "IT", flag: "🇮🇹", code: "+39", label: "Italie" },
-  { iso: "PT", flag: "🇵🇹", code: "+351", label: "Portugal" },
-  { iso: "NL", flag: "🇳🇱", code: "+31", label: "Pays-Bas" },
-  { iso: "US", flag: "🇺🇸", code: "+1", label: "USA / Canada" },
-];
-
 // Liste des prestations proposées dans le formulaire de devis.
 export const prestations: string[] = [
   "Conciergerie",

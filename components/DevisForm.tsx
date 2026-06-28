@@ -1,10 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import { prestations, dialCodes } from "@/lib/data";
+import PhoneInput, { isValidPhoneNumber } from "react-phone-number-input";
+import fr from "react-phone-number-input/locale/fr";
+import "react-phone-number-input/style.css";
+import { prestations } from "@/lib/data";
 
 type Status = "idle" | "loading" | "success" | "error";
-const REQUIRED = ["nom", "prenom", "telephone", "email", "prestation"] as const;
+const REQUIRED = ["nom", "prenom", "email", "prestation"] as const;
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const DEFAULT_FILE_INFO = "JPG, PNG — plusieurs fichiers possibles";
 const MAX_FILES = 6;
@@ -15,7 +18,7 @@ export default function DevisForm() {
   const [note, setNote] = useState("");
   const [errors, setErrors] = useState<Record<string, boolean>>({});
   const [fileInfo, setFileInfo] = useState(DEFAULT_FILE_INFO);
-  const [dialCode, setDialCode] = useState("+33");
+  const [phone, setPhone] = useState<string | undefined>(undefined);
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -35,10 +38,18 @@ export default function DevisForm() {
     });
     if (values.email && !EMAIL_RE.test(values.email)) nextErrors.email = true;
 
+    // Téléphone : numéro international complet (indicatif + numéro).
+    const phoneValid = Boolean(phone && isValidPhoneNumber(phone));
+    if (!phoneValid) nextErrors.telephone = true;
+
     if (Object.keys(nextErrors).length > 0) {
       setErrors(nextErrors);
       setStatus("error");
-      setNote("Merci de remplir correctement les champs obligatoires.");
+      setNote(
+        phone && !phoneValid && Object.keys(nextErrors).length === 1
+          ? "Numéro de téléphone invalide."
+          : "Merci de remplir correctement les champs obligatoires.",
+      );
       return;
     }
 
@@ -59,8 +70,9 @@ export default function DevisForm() {
       }
     }
 
-    // dialCode + telephone sont envoyés séparément ; l'API les fusionne
-    // (ex. "+33 612345678") — robuste même en cas d'appel direct à l'API.
+    // Le numéro est déjà au format international (ex. "+33612345678").
+    data.set("telephone", phone as string);
+
     setErrors({});
     setStatus("loading");
     setNote("Envoi en cours…");
@@ -76,7 +88,7 @@ export default function DevisForm() {
       );
       form.reset();
       setFileInfo(DEFAULT_FILE_INFO);
-      setDialCode("+33");
+      setPhone(undefined);
     } catch {
       setStatus("error");
       setNote(
@@ -102,29 +114,16 @@ export default function DevisForm() {
       <div className="form__row">
         <div className={cls("telephone")}>
           <label htmlFor="telephone">Téléphone *</label>
-          <div style={{ display: "flex", gap: 8 }}>
-            <select
-              name="dialCode"
-              aria-label="Indicatif pays"
-              value={dialCode}
-              onChange={(e) => setDialCode(e.target.value)}
-              style={{ width: "auto", flex: "0 0 auto" }}
-            >
-              {dialCodes.map((c) => (
-                <option key={c.iso} value={c.code} title={c.label}>
-                  {c.flag} {c.code}
-                </option>
-              ))}
-            </select>
-            <input
-              id="telephone"
-              name="telephone"
-              type="tel"
-              autoComplete="tel"
-              placeholder="6 12 34 56 78"
-              style={{ flex: 1 }}
-            />
-          </div>
+          <PhoneInput
+            id="telephone"
+            international
+            defaultCountry="FR"
+            labels={fr}
+            value={phone}
+            onChange={setPhone}
+            placeholder="Numéro de téléphone"
+            numberInputProps={{ autoComplete: "tel" }}
+          />
         </div>
         <div className={cls("email")}>
           <label htmlFor="email">Email *</label>
