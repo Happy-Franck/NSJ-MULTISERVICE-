@@ -6,6 +6,15 @@ import { createClient, type SupabaseClient } from "@supabase/supabase-js";
 // d'environnement ne sont pas encore renseignées.
 let cached: SupabaseClient | null = null;
 
+// Indique si les variables Supabase sont présentes. Permet de rendre le
+// stockage optionnel en développement local (ex : test email seul).
+export function isSupabaseConfigured(): boolean {
+  return Boolean(
+    process.env.NEXT_PUBLIC_SUPABASE_URL &&
+      process.env.SUPABASE_SERVICE_ROLE_KEY,
+  );
+}
+
 export function getSupabaseAdmin(): SupabaseClient {
   if (cached) return cached;
 

@@ -9,9 +9,9 @@ function getTransport() {
   const user = process.env.SMTP_USER;
   const pass = process.env.SMTP_PASS;
 
-  if (!host || !user || !pass) {
+  if (!host) {
     throw new Error(
-      "SMTP non configuré : définissez SMTP_HOST, SMTP_USER et SMTP_PASS dans .env.local",
+      "SMTP non configuré : définissez au moins SMTP_HOST dans .env.local",
     );
   }
 
@@ -19,7 +19,9 @@ function getTransport() {
     host,
     port,
     secure: port === 465, // true pour 465, false pour 587/STARTTLS
-    auth: { user, pass },
+    // Auth optionnelle : les serveurs de test locaux (MailDev, Mailpit…)
+    // n'en demandent pas. En production (Gmail…), renseigner USER + PASS.
+    ...(user && pass ? { auth: { user, pass } } : {}),
   });
 }
 
@@ -33,7 +35,10 @@ function escapeHtml(s: string) {
 export async function sendDevisEmail(devis: DevisInput) {
   const transport = getTransport();
   const to = process.env.DEVIS_TO_EMAIL || "solofonirina35@gmail.com";
-  const from = process.env.SMTP_FROM || process.env.SMTP_USER!;
+  const from =
+    process.env.SMTP_FROM ||
+    process.env.SMTP_USER ||
+    "devis@nsj-multiservice.local";
 
   const rows: [string, string][] = [
     ["Nom", devis.nom],

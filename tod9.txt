@@ -1,0 +1,123 @@
+============================================================
+NSJ MULTISERVICE — CE QU'IL TE RESTE À FAIRE (guide pas à pas)
+============================================================
+
+Le site Next.js est terminé et poussé sur GitHub.
+Mais le FORMULAIRE DE DEVIS ne marchera vraiment qu'après avoir
+configuré Supabase (base de données) + l'email SMTP.
+Suis les étapes ci-dessous dans l'ordre.
+
+
+------------------------------------------------------------
+ÉTAPE 0 — Lancer le projet en local
+------------------------------------------------------------
+Ouvre un terminal dans le dossier du projet, puis :
+
+   npm install        (à faire une seule fois)
+   npm run dev
+
+Ouvre ensuite http://localhost:3000 dans ton navigateur.
+Le site s'affiche. Tant que les étapes 1 et 2 ne sont pas faites,
+l'envoi du formulaire de devis affichera une erreur (c'est normal).
+
+
+------------------------------------------------------------
+ÉTAPE 1 — Créer le fichier des "secrets" (.env.local)
+------------------------------------------------------------
+1. Dans le dossier du projet, copie le fichier d'exemple :
+
+      cp .env.example .env.local
+
+2. Ouvre .env.local : c'est là que tu colleras tes clés
+   (étapes 2 et 3). Ce fichier reste PRIVÉ (jamais envoyé sur GitHub).
+
+
+------------------------------------------------------------
+ÉTAPE 2 — Supabase (stockage des demandes de devis)
+------------------------------------------------------------
+1. Va sur https://supabase.com et crée un compte (gratuit).
+2. Clique "New project". Choisis un nom (ex: nsj-multiservice),
+   un mot de passe de base de données, et une région (Europe).
+3. Attends ~1 minute que le projet soit prêt.
+
+4. CRÉER LA TABLE :
+   - Dans le menu de gauche : "SQL Editor".
+   - Clique "New query".
+   - Ouvre le fichier  supabase/schema.sql  du projet, copie TOUT
+     son contenu, colle-le dans l'éditeur, puis clique "Run".
+   - Ça crée la table "devis" qui stockera les demandes.
+
+5. RÉCUPÉRER LES CLÉS :
+   - Menu de gauche : "Project Settings" (roue dentée) > "API".
+   - Tu y trouves 3 valeurs à copier dans .env.local :
+
+        Project URL      ->  NEXT_PUBLIC_SUPABASE_URL
+        anon public      ->  NEXT_PUBLIC_SUPABASE_ANON_KEY
+        service_role     ->  SUPABASE_SERVICE_ROLE_KEY
+
+   ⚠️ La clé "service_role" est SECRÈTE : ne la partage jamais,
+      ne la mets jamais dans du code visible côté navigateur.
+      (Ici elle n'est utilisée que côté serveur, c'est sûr.)
+
+
+------------------------------------------------------------
+ÉTAPE 3 — Email (recevoir les demandes par mail)
+------------------------------------------------------------
+On utilise un compte Gmail comme expéditeur (le plus simple).
+
+1. Active la "validation en 2 étapes" sur ton compte Google
+   (https://myaccount.google.com/security).
+
+2. Crée un "mot de passe d'application" :
+   https://myaccount.google.com/apppasswords
+   Donne un nom (ex: NSJ site), Google te donne un code de 16 lettres.
+   C'est CE code qu'on utilise comme mot de passe (PAS ton mot de
+   passe Gmail habituel).
+
+3. Dans .env.local, remplis :
+
+        SMTP_HOST=smtp.gmail.com
+        SMTP_PORT=587
+        SMTP_USER=ton.adresse@gmail.com
+        SMTP_PASS=le_code_application_16_lettres
+        SMTP_FROM=ton.adresse@gmail.com
+        DEVIS_TO_EMAIL=solofonirina35@gmail.com
+
+   (DEVIS_TO_EMAIL = l'adresse qui REÇOIT les demandes de devis.)
+
+
+------------------------------------------------------------
+ÉTAPE 4 — Tester
+------------------------------------------------------------
+1. Arrête le serveur s'il tourne (Ctrl+C) puis relance :  npm run dev
+   (un redémarrage est nécessaire après avoir modifié .env.local)
+2. Va sur http://localhost:3000 , remplis le formulaire "Devis"
+   et envoie.
+3. Vérifie :
+   - Un message vert de confirmation s'affiche.
+   - Dans Supabase > "Table Editor" > table "devis" : une ligne est apparue.
+   - Tu reçois un email sur DEVIS_TO_EMAIL.
+
+
+------------------------------------------------------------
+PLUS TARD (améliorations possibles, pas urgent)
+------------------------------------------------------------
+- Mettre les VRAIES coordonnées (téléphone, email, WhatsApp) :
+  fichier  lib/site.ts
+- Mettre les VRAIES photos / avis :
+  fichier  lib/data.ts
+- Permettre l'envoi des PHOTOS du formulaire (via Supabase Storage) :
+  le champ existe déjà dans le formulaire mais les fichiers ne sont
+  pas encore transmis. Me le demander pour l'activer.
+- Mettre le site en ligne (déploiement) : le plus simple est Vercel
+  (https://vercel.com) ; il faudra y recopier les mêmes variables
+  d'environnement que dans .env.local.
+
+
+------------------------------------------------------------
+RAPPEL — Règle des commits
+------------------------------------------------------------
+Chaque section / page / logique validée = 1 commit, poussé sur :
+   git@github.com:Happy-Franck/NSJ-MULTISERVICE-.git  (branche main)
+Avant chaque commit : vérifier  npm run build  (ou  npx tsc --noEmit).
+============================================================
