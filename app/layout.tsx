@@ -21,7 +21,11 @@ const sora = Sora({
   display: "swap",
 });
 
-const SITE_URL = "https://www.nsj-multiservice.fr";
+const SITE_URL =
+  process.env.NEXT_PUBLIC_SITE_URL ??
+  (process.env.VERCEL_URL
+    ? `https://${process.env.VERCEL_URL}`
+    : "https://www.nsj-multiservice.fr");
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
