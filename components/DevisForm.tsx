@@ -1,18 +1,24 @@
 "use client";
 
 import { useState } from "react";
+import PhoneInput, { isValidPhoneNumber } from "react-phone-number-input";
+import fr from "react-phone-number-input/locale/fr";
+import "react-phone-number-input/style.css";
 import { prestations } from "@/lib/data";
 
 type Status = "idle" | "loading" | "success" | "error";
-const REQUIRED = ["nom", "prenom", "telephone", "email", "prestation"] as const;
+const REQUIRED = ["nom", "prenom", "email", "prestation"] as const;
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const DEFAULT_FILE_INFO = "JPG, PNG — plusieurs fichiers possibles";
+const MAX_FILES = 6;
+const MAX_SIZE = 5 * 1024 * 1024; // 5 Mo
 
 export default function DevisForm() {
   const [status, setStatus] = useState<Status>("idle");
   const [note, setNote] = useState("");
   const [errors, setErrors] = useState<Record<string, boolean>>({});
   const [fileInfo, setFileInfo] = useState(DEFAULT_FILE_INFO);
+  const [phone, setPhone] = useState<string | undefined>(undefined);
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -32,23 +38,49 @@ export default function DevisForm() {
     });
     if (values.email && !EMAIL_RE.test(values.email)) nextErrors.email = true;
 
+    // Téléphone : numéro international complet (indicatif + numéro).
+    const phoneValid = Boolean(phone && isValidPhoneNumber(phone));
+    if (!phoneValid) nextErrors.telephone = true;
+
     if (Object.keys(nextErrors).length > 0) {
       setErrors(nextErrors);
       setStatus("error");
-      setNote("Merci de remplir correctement les champs obligatoires.");
+      setNote(
+        phone && !phoneValid && Object.keys(nextErrors).length === 1
+          ? "Numéro de téléphone invalide."
+          : "Merci de remplir correctement les champs obligatoires.",
+      );
       return;
     }
+
+    // Validation des photos (optionnelles)
+    const photos = data
+      .getAll("photos")
+      .filter((f): f is File => f instanceof File && f.size > 0);
+    if (photos.length > MAX_FILES) {
+      setStatus("error");
+      setNote(`Maximum ${MAX_FILES} photos.`);
+      return;
+    }
+    for (const p of photos) {
+      if (p.size > MAX_SIZE) {
+        setStatus("error");
+        setNote(`Photo trop volumineuse (max 5 Mo) : ${p.name}`);
+        return;
+      }
+    }
+
+    // Le numéro est déjà au format international (ex. "+33612345678").
+    data.set("telephone", phone as string);
 
     setErrors({});
     setStatus("loading");
     setNote("Envoi en cours…");
 
     try {
-      const res = await fetch("/api/devis", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(values),
-      });
+      // multipart/form-data : on envoie le FormData tel quel (champs + fichiers).
+      // Ne pas définir Content-Type manuellement (le navigateur gère la limite).
+      const res = await fetch("/api/devis", { method: "POST", body: data });
       if (!res.ok) throw new Error("request failed");
       setStatus("success");
       setNote(
@@ -56,6 +88,7 @@ export default function DevisForm() {
       );
       form.reset();
       setFileInfo(DEFAULT_FILE_INFO);
+      setPhone(undefined);
     } catch {
       setStatus("error");
       setNote(
@@ -81,7 +114,16 @@ export default function DevisForm() {
       <div className="form__row">
         <div className={cls("telephone")}>
           <label htmlFor="telephone">Téléphone *</label>
-          <input id="telephone" name="telephone" type="tel" autoComplete="tel" />
+          <PhoneInput
+            id="telephone"
+            international
+            defaultCountry="FR"
+            labels={fr}
+            value={phone}
+            onChange={setPhone}
+            placeholder="Numéro de téléphone"
+            numberInputProps={{ autoComplete: "tel" }}
+          />
         </div>
         <div className={cls("email")}>
           <label htmlFor="email">Email *</label>

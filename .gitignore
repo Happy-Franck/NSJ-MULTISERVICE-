@@ -37,6 +37,10 @@ yarn-error.log*
 # claude local settings
 .claude/settings.local.json
 
+# supabase cli (fichiers temporaires / locaux)
+supabase/.temp
+supabase/.branches
+
 # vercel
 .vercel
 
