@@ -5,19 +5,27 @@ export type Service = {
   title: string;
   text: string;
   wide?: boolean;
+  /** Slug utilisé pour le nom de fichier image (`/assets/services/<slug>.jpg`). */
+  slug: string;
+  /**
+   * Photo du service. Laisser vide → placeholder en dégradé (charte noir/orange).
+   * Déposer les photos dans `public/assets/services/` puis renseigner le chemin,
+   * ex. `image: "/assets/services/entretien-nettoyage.jpg"`.
+   */
+  image?: string;
 };
 
 export const services: Service[] = [
-  { icon: "clean", title: "Entretien & Nettoyage", text: "Nettoyage régulier ou ponctuel de vos locaux, parties communes et logements.", wide: true },
-  { icon: "extreme", title: "Nettoyage Extrême", text: "Remise en état des situations difficiles : insalubrité, après sinistre, Diogène." },
-  { icon: "concierge", title: "Conciergerie", text: "Gestion et services sur-mesure pour faciliter votre quotidien." },
-  { icon: "debarras", title: "Débarras", text: "Débarras complet de maisons, appartements, caves et locaux." },
-  { icon: "reno", title: "Rénovation Tous Corps d'État", text: "Travaux complets, de la peinture au gros œuvre, coordonnés par nos soins.", wide: true },
-  { icon: "serrurerie", title: "Serrurerie", text: "Ouverture, dépannage et sécurisation de vos serrures et accès." },
-  { icon: "transport", title: "Transport", text: "Transport de marchandises et transport accompagné, en sécurité." },
-  { icon: "bricolage", title: "Bricolage", text: "Petits et grands travaux : montage, fixation, réparations." },
-  { icon: "verts", title: "Espaces Verts", text: "Tonte, taille, élagage et aménagement de vos extérieurs." },
-  { icon: "derat", title: "Dératisation & Désinsectisation", text: "Traitement et prévention contre nuisibles et insectes." },
+  { icon: "clean", slug: "entretien-nettoyage", title: "Entretien & Nettoyage", text: "Nettoyage régulier ou ponctuel de vos locaux, parties communes et logements.", wide: true },
+  { icon: "extreme", slug: "nettoyage-extreme", title: "Nettoyage Extrême", text: "Remise en état des situations difficiles : insalubrité, après sinistre, Diogène." },
+  { icon: "concierge", slug: "conciergerie", title: "Conciergerie", text: "Gestion et services sur-mesure pour faciliter votre quotidien." },
+  { icon: "debarras", slug: "debarras", title: "Débarras", text: "Débarras complet de maisons, appartements, caves et locaux." },
+  { icon: "reno", slug: "renovation", title: "Rénovation Tous Corps d'État", text: "Travaux complets, de la peinture au gros œuvre, coordonnés par nos soins.", wide: true },
+  { icon: "serrurerie", slug: "serrurerie", title: "Serrurerie", text: "Ouverture, dépannage et sécurisation de vos serrures et accès." },
+  { icon: "transport", slug: "transport", title: "Transport", text: "Transport de marchandises et transport accompagné, en sécurité." },
+  { icon: "bricolage", slug: "bricolage", title: "Bricolage", text: "Petits et grands travaux : montage, fixation, réparations." },
+  { icon: "verts", slug: "espaces-verts", title: "Espaces Verts", text: "Tonte, taille, élagage et aménagement de vos extérieurs." },
+  { icon: "derat", slug: "deratisation", title: "Dératisation & Désinsectisation", text: "Traitement et prévention contre nuisibles et insectes." },
 ];
 
 export type WhyItem = { icon: IconName; title: string; text: string };
