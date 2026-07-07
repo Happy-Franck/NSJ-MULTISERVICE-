@@ -66,11 +66,11 @@ export const catLabel: Record<GalleryCategory, string> = {
 };
 
 export const gallery: GalleryItem[] = [
-  { cat: "nettoyage", title: "Appartement insalubre", before: "https://images.unsplash.com/photo-1558317374-067fb5f30001?auto=format&fit=crop&w=800&q=80", after: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80" },
-  { cat: "renovation", title: "Rénovation cuisine", before: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?auto=format&fit=crop&w=800&q=80", after: "https://images.unsplash.com/photo-1556909212-d5b604d0c90d?auto=format&fit=crop&w=800&q=80" },
-  { cat: "debarras", title: "Débarras de local", before: "https://images.unsplash.com/photo-1521587760476-6c12a4b040da?auto=format&fit=crop&w=800&q=80", after: "https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=800&q=80" },
-  { cat: "espaces-verts", title: "Entretien de jardin", before: "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?auto=format&fit=crop&w=800&q=80", after: "https://images.unsplash.com/photo-1558904541-efa843a96f01?auto=format&fit=crop&w=800&q=80" },
-  { cat: "nettoyage", title: "Remise en état SDB", before: "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=800&q=80", after: "https://images.unsplash.com/photo-1620626011761-996317b8d101?auto=format&fit=crop&w=800&q=80" },
+  { cat: "nettoyage", title: "Appartement insalubre", before: "/assets/realisations/appartement-insalubre-before.jpeg", after: "/assets/realisations/appartement-insalubre-after.jpeg" },
+  { cat: "renovation", title: "Rénovation cuisine", before: "/assets/realisations/renovation-cuisine-before.jpeg", after: "/assets/realisations/renovation-cuisine-after.jpeg" },
+  { cat: "debarras", title: "Débarras de local", before: "/assets/realisations/debarras-local-before.jpeg", after: "/assets/realisations/debarras-local-after.jpeg" },
+  { cat: "espaces-verts", title: "Entretien de jardin", before: "/assets/realisations/espace-vert-before.jpeg", after: "/assets/realisations/espace-vert-after.jpeg" },
+  { cat: "nettoyage", title: "Remise en état SDB", before: "/assets/realisations/renovation-sdb-before.jpeg", after: "/assets/realisations/renovation-sdb-after.jpeg" },
   { cat: "renovation", title: "Rénovation bureaux", before: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=800&q=80", after: "https://images.unsplash.com/photo-1556911220-bff31c812dba?auto=format&fit=crop&w=800&q=80" },
 ];
 
