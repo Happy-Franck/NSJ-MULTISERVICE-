@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { catLabel, gallery as allItems, type GalleryItem } from "@/lib/data";
 
 const FILTERS: { value: "all" | GalleryItem["cat"]; label: string }[] = [
@@ -19,7 +19,45 @@ export default function Gallery({
   showFilters?: boolean;
 }) {
   const [active, setActive] = useState<"all" | GalleryItem["cat"]>("all");
-  const items = typeof limit === "number" ? allItems.slice(0, limit) : allItems;
+  const base = typeof limit === "number" ? allItems.slice(0, limit) : allItems;
+  // On filtre réellement la liste rendue (au lieu de masquer en CSS) : la
+  // grille se réagence proprement, sans trous ni cartes fantômes.
+  const items = active === "all" ? base : base.filter((it) => it.cat === active);
+
+  // Révélation à l'apparition gérée dans React (et non via le ScrollReveal
+  // global) : sinon un re-rendu au clic sur un filtre effacerait la classe
+  // `is-visible` ajoutée en DOM. Indexée par titre (clé stable) car filtrer
+  // réordonne la liste — un index désignerait alors une autre carte.
+  const [revealed, setRevealed] = useState<Set<string>>(new Set());
+  const cardRefs = useRef<Map<string, HTMLDivElement>>(new Map());
+
+  useEffect(() => {
+    const io = new IntersectionObserver(
+      (entries) => {
+        setRevealed((prev) => {
+          const next = new Set(prev);
+          let changed = false;
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              const key = (entry.target as HTMLElement).dataset.key;
+              if (key && !next.has(key)) {
+                next.add(key);
+                changed = true;
+              }
+              io.unobserve(entry.target);
+            }
+          });
+          return changed ? next : prev;
+        });
+      },
+      { threshold: 0.12 },
+    );
+    // Réobserve les cartes actuellement montées à chaque changement de filtre,
+    // sinon une carte affichée par un onglet mais jamais vue au scroll
+    // resterait invisible (opacity 0).
+    cardRefs.current.forEach((el) => io.observe(el));
+    return () => io.disconnect();
+  }, [active]);
 
   return (
     <>
@@ -34,6 +72,8 @@ export default function Gallery({
             <button
               key={f.value}
               type="button"
+              role="tab"
+              aria-selected={active === f.value}
               className={`filter${active === f.value ? " is-active" : ""}`}
               onClick={() => setActive(f.value)}
             >
@@ -47,8 +87,13 @@ export default function Gallery({
         {items.map((item) => (
           <div
             key={item.title}
-            className={`ba-card${active !== "all" && item.cat !== active ? " is-hidden" : ""}`}
+            ref={(el) => {
+              if (el) cardRefs.current.set(item.title, el);
+              else cardRefs.current.delete(item.title);
+            }}
+            className={`ba-card${revealed.has(item.title) ? " is-visible" : ""}`}
             data-cat={item.cat}
+            data-key={item.title}
             data-reveal
           >
             <BeforeAfter item={item} />
