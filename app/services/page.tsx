@@ -7,7 +7,7 @@ import DevisSection from "@/components/sections/DevisSection";
 export const metadata: Metadata = {
   title: "Nos services — Nettoyage, Rénovation, Débarras…",
   description:
-    "Découvrez les services NSJ Multiservice : entretien & nettoyage, nettoyage extrême, conciergerie, débarras, rénovation tous corps d'état, serrurerie, transport, bricolage, espaces verts et dératisation en Île-de-France.",
+    "Découvrez les services NSJ Multiservice : entretien & nettoyage, nettoyage extrême, conciergerie, débarras, rénovation tous corps d'état, serrurerie, transport, bricolage, espaces verts, dératisation, gestion de biens & logements et gestion de la literie en Île-de-France.",
   alternates: { canonical: "/services" },
 };
 

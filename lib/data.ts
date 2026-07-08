@@ -5,6 +5,8 @@ export type Service = {
   title: string;
   text: string;
   wide?: boolean;
+  /** Détail des prestations incluses (liste à puces affichée sous la description). */
+  features?: string[];
   /** Slug utilisé pour le nom de fichier image (`/assets/services/<slug>.jpg`). */
   slug: string;
   /**
@@ -26,6 +28,8 @@ export const services: Service[] = [
   { icon: "bricolage", slug: "bricolage", title: "Bricolage", text: "Petits et grands travaux : montage, fixation, réparations.", image: "/assets/services/bricolage.jpg" },
   { icon: "verts", slug: "espaces-verts", title: "Espaces Verts", text: "Tonte, taille, élagage et aménagement de vos extérieurs.", image: "/assets/services/espaces-verts.jpg" },
   { icon: "derat", slug: "deratisation", title: "Dératisation & Désinsectisation", text: "Traitement et prévention contre nuisibles et insectes.", image: "/assets/services/deratisation.jpg" },
+  { icon: "biens", slug: "gestion-biens-logements", title: "Gestion de biens & Logements", text: "Gestion locative et suivi de vos logements, en toute sérénité.", features: ["États des lieux", "Remise des clés", "Visites de contrôle", "Mise en sécurité", "Coordination des interventions"] },
+  { icon: "literie", slug: "gestion-literie", title: "Gestion de la literie", text: "Fourniture, entretien et remplacement de votre linge de maison.", features: ["Mise en place du linge de lit", "Changement des draps et serviettes", "Collecte et blanchisserie", "Contrôle de l'état du linge", "Réapprovisionnement"] },
 ];
 
 export type WhyItem = { icon: IconName; title: string; text: string };
@@ -101,5 +105,7 @@ export const prestations: string[] = [
   "Bricolage",
   "Espaces Verts",
   "Dératisation & Désinsectisation",
+  "Gestion de biens & Logements",
+  "Gestion de la literie",
   "Autre / Plusieurs prestations",
 ];

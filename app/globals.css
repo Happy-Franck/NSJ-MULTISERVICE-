@@ -148,6 +148,10 @@ h1, h2, h3, h4 { font-family: var(--ff-d); line-height: 1.12; letter-spacing: -.
 .service-card__body { display: flex; flex-direction: column; flex: 1; gap: 8px; padding: 20px; }
 .service-card__body h3 { font-family: var(--ff-d); font-weight: 600; font-size: 1.12rem; }
 .service-card__body p { color: var(--text-soft); font-size: .92rem; flex: 1; margin-bottom: 4px; }
+.service-card__body:has(.service-card__features) p { flex: none; }
+.service-card__features { list-style: none; display: flex; flex-direction: column; gap: 6px; flex: 1; margin-bottom: 4px; }
+.service-card__features li { position: relative; padding-left: 20px; font-size: .88rem; color: var(--text-soft); }
+.service-card__features li::before { content: ""; position: absolute; left: 2px; top: .5em; width: 6px; height: 6px; border-radius: 50%; background: var(--orange); }
 .service-card__cta { display: inline-flex; align-items: center; gap: 6px; font-family: var(--ff-d); font-weight: 600; font-size: .88rem; color: var(--orange-ink); transition: gap .2s; }
 .service-card__cta:hover { gap: 11px; }
 .service-card__cta svg { width: 15px; height: 15px; }

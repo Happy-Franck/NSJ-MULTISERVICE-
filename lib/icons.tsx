@@ -11,6 +11,8 @@ export type IconName =
   | "bricolage"
   | "verts"
   | "derat"
+  | "biens"
+  | "literie"
   | "bolt"
   | "shield"
   | "clock"
@@ -42,6 +44,10 @@ const PATHS: Record<IconName, string> = {
     '<path d="M12 22V12M12 12c0-5 3-8 8-8 0 5-3 8-8 8zM12 14c0-4-2.5-6.5-6.5-6.5C5.5 11.5 8 14 12 14z"/>',
   derat:
     '<path d="M3 12c0-3 2-5 5-5 4 0 6 3 10 3M8 7a2 2 0 1 0 0-.01M18 10l3-2M18 10l3 2M2 14c2 4 6 6 10 6 5 0 9-3 9-7"/>',
+  biens:
+    '<rect x="8" y="2" width="8" height="4" rx="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="m9 14 2 2 4-4"/>',
+  literie:
+    '<path d="M2 4v16M2 8h16a3 3 0 0 1 3 3v9M2 17h20M6 8V6h4v2"/>',
   bolt: '<path d="M13 2L4 14h7l-1 8 9-12h-7l1-8z"/>',
   shield:
     '<path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/>',
