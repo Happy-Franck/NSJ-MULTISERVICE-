@@ -32,7 +32,7 @@ export default function Hero() {
           <div
             className="bento__img"
             role="img"
-            aria-label="NSJ Multiservice — un seul interlocuteur, tous vos services : entretien, nettoyage extrême, débarras, rénovation, serrurerie, transport, bricolage, espaces verts, dératisation"
+            aria-label="Intervention de nettoyage professionnel NSJ Multiservice"
           ></div>
           <div className="bento__tile bento__rating">
             <div className="bento__stars">★★★★★</div>

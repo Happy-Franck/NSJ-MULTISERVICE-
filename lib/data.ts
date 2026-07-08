@@ -26,8 +26,8 @@ export const services: Service[] = [
   { icon: "bricolage", slug: "bricolage", title: "Bricolage", text: "Petits et grands travaux : montage, fixation, réparations.", image: "/assets/services/bricolage.jpg" },
   { icon: "verts", slug: "espaces-verts", title: "Espaces Verts", text: "Tonte, taille, élagage et aménagement de vos extérieurs.", image: "/assets/services/espaces-verts.jpg" },
   { icon: "derat", slug: "deratisation", title: "Dératisation & Désinsectisation", text: "Traitement et prévention contre nuisibles et insectes.", image: "/assets/services/deratisation.jpg" },
-  { icon: "biens", slug: "gestion-biens-logements", title: "Gestion de biens & Logements", text: "États des lieux, remise des clés, visites de contrôle, mise en sécurité et coordination des interventions.", wide: true },
-  { icon: "literie", slug: "gestion-literie", title: "Gestion de la literie", text: "Fourniture, entretien et remplacement de votre linge de maison : mise en place du linge de lit, changement des draps et serviettes, collecte et blanchisserie, contrôle de l'état du linge et réapprovisionnement." },
+  { icon: "biens", slug: "gestion-biens-logements", title: "Gestion de biens & Logements", text: "États des lieux, remise des clés, visites de contrôle, mise en sécurité et coordination des interventions.", wide: true, image: "/assets/services/gestion-biens-logements.jpg" },
+  { icon: "literie", slug: "gestion-literie", title: "Gestion de la literie", text: "Fourniture, entretien et remplacement de votre linge de maison : mise en place du linge de lit, changement des draps et serviettes, collecte et blanchisserie, contrôle de l'état du linge et réapprovisionnement.", image: "/assets/services/gestion-literie.jpg" },
 ];
 
 export type WhyItem = { icon: IconName; title: string; text: string };
