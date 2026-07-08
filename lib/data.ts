@@ -73,7 +73,7 @@ export const gallery: GalleryItem[] = [
   { cat: "debarras", title: "Débarras de local", before: "/assets/realisations/debarras-local-before.jpeg", after: "/assets/realisations/debarras-local-after.jpeg" },
   { cat: "espaces-verts", title: "Entretien de jardin", before: "/assets/realisations/espace-vert-before.jpeg", after: "/assets/realisations/espace-vert-after.jpeg" },
   { cat: "nettoyage", title: "Remise en état SDB", before: "/assets/realisations/renovation-sdb-before.jpeg", after: "/assets/realisations/renovation-sdb-after.jpeg" },
-  { cat: "renovation", title: "Rénovation bureaux", before: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=800&q=80", after: "https://images.unsplash.com/photo-1556911220-bff31c812dba?auto=format&fit=crop&w=800&q=80" },
+  { cat: "renovation", title: "Rénovation bureaux", before: "/assets/realisations/renovation-bureaux-before.png", after: "/assets/realisations/renovation-bureaux-after.webp" },
 ];
 
 export type Review = {
