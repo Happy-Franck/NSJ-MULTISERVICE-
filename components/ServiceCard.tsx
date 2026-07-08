@@ -37,13 +37,6 @@ export default function ServiceCard({
       <div className="service-card__body">
         <h3>{service.title}</h3>
         <p>{service.text}</p>
-        {service.features && (
-          <ul className="service-card__features">
-            {service.features.map((f) => (
-              <li key={f}>{f}</li>
-            ))}
-          </ul>
-        )}
         <PrestationCta prestation={service.title} className="service-card__cta">
           Demander un devis <Icon name="arrow" strokeWidth={2} />
         </PrestationCta>
