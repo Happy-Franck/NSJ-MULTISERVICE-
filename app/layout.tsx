@@ -72,7 +72,7 @@ const jsonLd = {
     "Nettoyage, rénovation, débarras, conciergerie, transport et services aux particuliers et professionnels en Île-de-France.",
   url: SITE_URL,
   telephone: "+33000000000",
-  email: "contact@nsj-multiservice.fr",
+  email: "multiservices.nsj@gmail.com",
   priceRange: "€€",
   areaServed: [
     "Chaville",
