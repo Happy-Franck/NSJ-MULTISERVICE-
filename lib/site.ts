@@ -5,7 +5,7 @@ export const site = {
   name: "NSJ Multiservice",
   phoneDisplay: "07 59 63 86 81",
   phoneE164: "+33759638681",
-  email: "contact@nsj-multiservice.fr",
+  email: "multiservices.nsj@gmail.com",
   whatsapp: "33759638681",
   whatsappText:
     "Bonjour, je souhaite obtenir un devis pour une prestation NSJ Multiservice.",
