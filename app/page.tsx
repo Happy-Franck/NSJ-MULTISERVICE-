@@ -1,6 +1,5 @@
 import Link from "next/link";
 import Hero from "@/components/sections/Hero";
-import BannerBand from "@/components/sections/BannerBand";
 import ServicesSlider from "@/components/sections/ServicesSlider";
 import WhyGrid from "@/components/sections/WhyGrid";
 import Gallery from "@/components/sections/Gallery";
@@ -11,7 +10,6 @@ export default function Home() {
   return (
     <>
       <Hero />
-      <BannerBand />
 
       <section className="section" id="services">
         <div className="container">
