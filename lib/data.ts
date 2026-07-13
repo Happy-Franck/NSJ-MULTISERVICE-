@@ -74,6 +74,10 @@ export const gallery: GalleryItem[] = [
   { cat: "espaces-verts", title: "Entretien de jardin", before: "/assets/realisations/espace-vert-before.jpeg", after: "/assets/realisations/espace-vert-after.jpeg" },
   { cat: "nettoyage", title: "Remise en état SDB", before: "/assets/realisations/renovation-sdb-before.jpeg", after: "/assets/realisations/renovation-sdb-after.jpeg" },
   { cat: "renovation", title: "Rénovation bureaux", before: "/assets/realisations/renovation-bureaux-before.png", after: "/assets/realisations/renovation-bureaux-after.webp" },
+  { cat: "nettoyage", title: "Nettoyage vitres & châssis", before: "/assets/realisations/nettoyage-vitres-before.jpeg", after: "/assets/realisations/nettoyage-vitres-after.jpeg" },
+  { cat: "nettoyage", title: "Dégraissage cuisinière", before: "/assets/realisations/nettoyage-gaziniere-before.jpeg", after: "/assets/realisations/nettoyage-gaziniere-after.jpeg" },
+  { cat: "nettoyage", title: "Nettoyage sanitaires", before: "/assets/realisations/nettoyage-sanitaires-before.jpeg", after: "/assets/realisations/nettoyage-sanitaires-after.jpeg" },
+  { cat: "renovation", title: "Restauration garde-corps", before: "/assets/realisations/renovation-garde-corps-before.jpeg", after: "/assets/realisations/renovation-garde-corps-after.jpeg" },
 ];
 
 export type Review = {
