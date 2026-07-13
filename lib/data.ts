@@ -78,7 +78,6 @@ export const gallery: GalleryItem[] = [
   { cat: "nettoyage", title: "Dégraissage cuisinière", before: "/assets/realisations/nettoyage-gaziniere-before.jpeg", after: "/assets/realisations/nettoyage-gaziniere-after.jpeg" },
   { cat: "nettoyage", title: "Nettoyage sanitaires", before: "/assets/realisations/nettoyage-sanitaires-before.jpeg", after: "/assets/realisations/nettoyage-sanitaires-after.jpeg" },
   { cat: "renovation", title: "Restauration garde-corps", before: "/assets/realisations/renovation-garde-corps-before.jpeg", after: "/assets/realisations/renovation-garde-corps-after.jpeg" },
-  { cat: "nettoyage", title: "Nettoyage sous-évier", before: "/assets/realisations/nettoyage-sous-evier.jpeg", after: "/assets/realisations/nettoyage-sous-evier.jpeg" },
 ];
 
 export type Review = {
