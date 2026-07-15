@@ -85,27 +85,33 @@ export async function POST(request: Request) {
   // --- Stockage Supabase (storage + table) si configuré ---
   const photoUrls: string[] = [];
   if (isSupabaseConfigured()) {
-    try {
-      const supabase = getSupabaseAdmin();
+    const supabase = getSupabaseAdmin();
 
-      // 1) Upload des photos dans le bucket.
-      for (let i = 0; i < buffers.length; i++) {
-        const { file, buffer } = buffers[i];
-        const path = `${id}/${i}-${sanitize(file.name) || "photo"}`;
+    // 1) Upload des photos dans le bucket (best-effort : un échec Storage —
+    //    ex. bucket absent — ne doit PAS faire perdre la demande. Les photos
+    //    restent envoyées en pièces jointes de l'email.)
+    for (let i = 0; i < buffers.length; i++) {
+      const { file, buffer } = buffers[i];
+      const path = `${id}/${i}-${sanitize(file.name) || "photo"}`;
+      try {
         const { error: upErr } = await supabase.storage
           .from(BUCKET)
           .upload(path, buffer, { contentType: file.type, upsert: true });
         if (upErr) throw upErr;
         photoUrls.push(supabase.storage.from(BUCKET).getPublicUrl(path).data.publicUrl);
+      } catch (err) {
+        console.error(`[devis] upload photo ${i} échoué (ignoré) :`, err);
       }
+    }
 
-      // 2) Insertion de la demande (avec URLs des photos).
+    // 2) Insertion de la demande (avec les URLs des photos réellement stockées).
+    try {
       const { error } = await supabase
         .from("devis")
         .insert({ id, ...devis, photos: photoUrls });
       if (error) throw error;
     } catch (err) {
-      console.error("[devis] échec stockage Supabase:", err);
+      console.error("[devis] échec insertion Supabase:", err);
       return NextResponse.json(
         { error: "Impossible d'enregistrer la demande." },
         { status: 500 },

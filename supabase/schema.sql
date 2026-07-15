@@ -36,9 +36,12 @@ alter table public.devis enable row level security;
 -- ------------------------------------------------------------
 -- Stockage des photos (Supabase Storage)
 -- Bucket PUBLIC "devis-photos" (les liens sont mis dans l'email).
--- Il peut être créé depuis le Dashboard > Storage, ou automatiquement
--- par le script du projet. Équivalent SQL :
---   insert into storage.buckets (id, name, public)
---   values ('devis-photos', 'devis-photos', true)
---   on conflict (id) do nothing;
+-- Sans ce bucket, l'upload des photos échoue côté API.
 -- ------------------------------------------------------------
+insert into storage.buckets (id, name, public)
+values ('devis-photos', 'devis-photos', true)
+on conflict (id) do nothing;
+
+-- Recharge le cache de schéma de l'API PostgREST (sinon un insert
+-- référençant une colonne récemment ajoutée peut renvoyer une erreur).
+notify pgrst, 'reload schema';

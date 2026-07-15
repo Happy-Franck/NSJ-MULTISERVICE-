@@ -1,7 +1,6 @@
 import Link from "next/link";
 import Hero from "@/components/sections/Hero";
-import BannerBand from "@/components/sections/BannerBand";
-import ServicesGrid from "@/components/sections/ServicesGrid";
+import ServicesSlider from "@/components/sections/ServicesSlider";
 import WhyGrid from "@/components/sections/WhyGrid";
 import Gallery from "@/components/sections/Gallery";
 import Reviews from "@/components/sections/Reviews";
@@ -11,7 +10,6 @@ export default function Home() {
   return (
     <>
       <Hero />
-      <BannerBand />
 
       <section className="section" id="services">
         <div className="container">
@@ -20,7 +18,9 @@ export default function Home() {
             <h2>Une offre complète, un seul interlocuteur</h2>
             <p>Du nettoyage courant aux interventions les plus techniques.</p>
           </div>
-          <ServicesGrid limit={6} />
+        </div>
+        <ServicesSlider />
+        <div className="container">
           <div className="center" style={{ marginTop: 40 }}>
             <Link href="/services" className="btn btn--primary btn--lg">
               Voir tous les services

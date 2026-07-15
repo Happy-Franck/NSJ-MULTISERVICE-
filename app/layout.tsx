@@ -71,7 +71,7 @@ const jsonLd = {
   description:
     "Nettoyage, rénovation, débarras, conciergerie, transport et services aux particuliers et professionnels en Île-de-France.",
   url: SITE_URL,
-  telephone: "+33000000000",
+  telephone: "+33759638681",
   email: "multiservices.nsj@gmail.com",
   priceRange: "€€",
   areaServed: [

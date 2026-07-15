@@ -5,7 +5,7 @@ export default function BannerBand() {
     <section className="banner-band">
       <div className="container">
         <Image
-          src="/assets/banner.jpeg"
+          src="/assets/hero-banner.png"
           alt="NSJ Multiservice — entretien, nettoyage extrême, débarras, rénovation, serrurerie, transport, bricolage, espaces verts, dératisation"
           width={2048}
           height={683}

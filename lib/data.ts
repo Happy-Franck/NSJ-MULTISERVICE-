@@ -5,19 +5,29 @@ export type Service = {
   title: string;
   text: string;
   wide?: boolean;
+  /** Slug utilisé pour le nom de fichier image (`/assets/services/<slug>.jpg`). */
+  slug: string;
+  /**
+   * Photo du service. Laisser vide → placeholder en dégradé (charte noir/orange).
+   * Déposer les photos dans `public/assets/services/` puis renseigner le chemin,
+   * ex. `image: "/assets/services/entretien-nettoyage.jpg"`.
+   */
+  image?: string;
 };
 
 export const services: Service[] = [
-  { icon: "clean", title: "Entretien & Nettoyage", text: "Nettoyage régulier ou ponctuel de vos locaux, parties communes et logements.", wide: true },
-  { icon: "extreme", title: "Nettoyage Extrême", text: "Remise en état des situations difficiles : insalubrité, après sinistre, Diogène." },
-  { icon: "concierge", title: "Conciergerie", text: "Gestion et services sur-mesure pour faciliter votre quotidien." },
-  { icon: "debarras", title: "Débarras", text: "Débarras complet de maisons, appartements, caves et locaux." },
-  { icon: "reno", title: "Rénovation Tous Corps d'État", text: "Travaux complets, de la peinture au gros œuvre, coordonnés par nos soins.", wide: true },
-  { icon: "serrurerie", title: "Serrurerie", text: "Ouverture, dépannage et sécurisation de vos serrures et accès." },
-  { icon: "transport", title: "Transport", text: "Transport de marchandises et transport accompagné, en sécurité." },
-  { icon: "bricolage", title: "Bricolage", text: "Petits et grands travaux : montage, fixation, réparations." },
-  { icon: "verts", title: "Espaces Verts", text: "Tonte, taille, élagage et aménagement de vos extérieurs." },
-  { icon: "derat", title: "Dératisation & Désinsectisation", text: "Traitement et prévention contre nuisibles et insectes." },
+  { icon: "clean", slug: "entretien-nettoyage", title: "Entretien & Nettoyage", text: "Nettoyage régulier ou ponctuel de vos locaux, parties communes et logements.", wide: true, image: "/assets/services/entretien-nettoyage.jpg" },
+  { icon: "extreme", slug: "nettoyage-extreme", title: "Nettoyage Extrême", text: "Remise en état des situations difficiles : insalubrité, après sinistre, Diogène.", image: "/assets/services/nettoyage-extreme.jpg" },
+  { icon: "concierge", slug: "conciergerie", title: "Conciergerie", text: "Gestion et services sur-mesure pour faciliter votre quotidien.", image: "/assets/services/conciergerie.jpg" },
+  { icon: "debarras", slug: "debarras", title: "Débarras", text: "Débarras complet de maisons, appartements, caves et locaux.", image: "/assets/services/debarras.jpg" },
+  { icon: "reno", slug: "renovation", title: "Rénovation Tous Corps d'État", text: "Travaux complets, de la peinture au gros œuvre, coordonnés par nos soins.", wide: true, image: "/assets/services/renovation.jpg" },
+  { icon: "serrurerie", slug: "serrurerie", title: "Serrurerie", text: "Ouverture, dépannage et sécurisation de vos serrures et accès.", image: "/assets/services/serrurerie.jpg" },
+  { icon: "transport", slug: "transport", title: "Transport", text: "Transport de marchandises et transport accompagné, en sécurité.", image: "/assets/services/transport.jpg" },
+  { icon: "bricolage", slug: "bricolage", title: "Bricolage", text: "Petits et grands travaux : montage, fixation, réparations.", image: "/assets/services/bricolage.jpg" },
+  { icon: "verts", slug: "espaces-verts", title: "Espaces Verts", text: "Tonte, taille, élagage et aménagement de vos extérieurs.", image: "/assets/services/espaces-verts.jpg" },
+  { icon: "derat", slug: "deratisation", title: "Dératisation & Désinsectisation", text: "Traitement et prévention contre nuisibles et insectes.", image: "/assets/services/deratisation.jpg" },
+  { icon: "biens", slug: "gestion-biens-logements", title: "Gestion de biens & Logements", text: "États des lieux, remise des clés, visites de contrôle, mise en sécurité et coordination des interventions.", wide: true, image: "/assets/services/gestion-biens-logements.jpg" },
+  { icon: "literie", slug: "gestion-literie", title: "Gestion de la literie", text: "Fourniture, entretien et remplacement de votre linge de maison : mise en place du linge de lit, changement des draps et serviettes, collecte et blanchisserie, contrôle de l'état du linge et réapprovisionnement.", image: "/assets/services/gestion-literie.jpg" },
 ];
 
 export type WhyItem = { icon: IconName; title: string; text: string };
@@ -58,12 +68,16 @@ export const catLabel: Record<GalleryCategory, string> = {
 };
 
 export const gallery: GalleryItem[] = [
-  { cat: "nettoyage", title: "Appartement insalubre", before: "https://images.unsplash.com/photo-1558317374-067fb5f30001?auto=format&fit=crop&w=800&q=80", after: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80" },
-  { cat: "renovation", title: "Rénovation cuisine", before: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?auto=format&fit=crop&w=800&q=80", after: "https://images.unsplash.com/photo-1556909212-d5b604d0c90d?auto=format&fit=crop&w=800&q=80" },
-  { cat: "debarras", title: "Débarras de local", before: "https://images.unsplash.com/photo-1521587760476-6c12a4b040da?auto=format&fit=crop&w=800&q=80", after: "https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=800&q=80" },
-  { cat: "espaces-verts", title: "Entretien de jardin", before: "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?auto=format&fit=crop&w=800&q=80", after: "https://images.unsplash.com/photo-1558904541-efa843a96f01?auto=format&fit=crop&w=800&q=80" },
-  { cat: "nettoyage", title: "Remise en état SDB", before: "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=800&q=80", after: "https://images.unsplash.com/photo-1620626011761-996317b8d101?auto=format&fit=crop&w=800&q=80" },
-  { cat: "renovation", title: "Rénovation bureaux", before: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=800&q=80", after: "https://images.unsplash.com/photo-1556911220-bff31c812dba?auto=format&fit=crop&w=800&q=80" },
+  { cat: "nettoyage", title: "Appartement insalubre", before: "/assets/realisations/appartement-insalubre-before.jpeg", after: "/assets/realisations/appartement-insalubre-after.jpeg" },
+  { cat: "renovation", title: "Rénovation cuisine", before: "/assets/realisations/renovation-cuisine-before.jpeg", after: "/assets/realisations/renovation-cuisine-after.jpeg" },
+  { cat: "debarras", title: "Débarras de local", before: "/assets/realisations/debarras-local-before.jpeg", after: "/assets/realisations/debarras-local-after.jpeg" },
+  { cat: "espaces-verts", title: "Entretien de jardin", before: "/assets/realisations/espace-vert-before.jpeg", after: "/assets/realisations/espace-vert-after.jpeg" },
+  { cat: "nettoyage", title: "Remise en état SDB", before: "/assets/realisations/renovation-sdb-before.jpeg", after: "/assets/realisations/renovation-sdb-after.jpeg" },
+  { cat: "renovation", title: "Rénovation bureaux", before: "/assets/realisations/renovation-bureaux-before.png", after: "/assets/realisations/renovation-bureaux-after.webp" },
+  { cat: "nettoyage", title: "Nettoyage vitres & châssis", before: "/assets/realisations/nettoyage-vitres-before.jpeg", after: "/assets/realisations/nettoyage-vitres-after.jpeg" },
+  { cat: "nettoyage", title: "Dégraissage cuisinière", before: "/assets/realisations/nettoyage-gaziniere-before.jpeg", after: "/assets/realisations/nettoyage-gaziniere-after.jpeg" },
+  { cat: "nettoyage", title: "Nettoyage sanitaires", before: "/assets/realisations/nettoyage-sanitaires-before.jpeg", after: "/assets/realisations/nettoyage-sanitaires-after.jpeg" },
+  { cat: "renovation", title: "Restauration garde-corps", before: "/assets/realisations/renovation-garde-corps-before.jpeg", after: "/assets/realisations/renovation-garde-corps-after.jpeg" },
 ];
 
 export type Review = {
@@ -93,5 +107,7 @@ export const prestations: string[] = [
   "Bricolage",
   "Espaces Verts",
   "Dératisation & Désinsectisation",
+  "Gestion de biens & Logements",
+  "Gestion de la literie",
   "Autre / Plusieurs prestations",
 ];

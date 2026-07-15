@@ -1,10 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import PhoneInput, { isValidPhoneNumber } from "react-phone-number-input";
 import fr from "react-phone-number-input/locale/fr";
 import "react-phone-number-input/style.css";
 import { prestations } from "@/lib/data";
+import { PRESTATION_EVENT } from "@/components/PrestationCta";
 
 type Status = "idle" | "loading" | "success" | "error";
 const REQUIRED = ["nom", "prenom", "email", "prestation"] as const;
@@ -19,6 +20,19 @@ export default function DevisForm() {
   const [errors, setErrors] = useState<Record<string, boolean>>({});
   const [fileInfo, setFileInfo] = useState(DEFAULT_FILE_INFO);
   const [phone, setPhone] = useState<string | undefined>(undefined);
+  const [prestation, setPrestation] = useState("");
+
+  // Pré-remplissage depuis une card service (« Demander un devis »).
+  useEffect(() => {
+    function onPick(e: Event) {
+      const detail = (e as CustomEvent<string>).detail;
+      if (typeof detail === "string" && prestations.includes(detail)) {
+        setPrestation(detail);
+      }
+    }
+    window.addEventListener(PRESTATION_EVENT, onPick);
+    return () => window.removeEventListener(PRESTATION_EVENT, onPick);
+  }, []);
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -89,6 +103,7 @@ export default function DevisForm() {
       form.reset();
       setFileInfo(DEFAULT_FILE_INFO);
       setPhone(undefined);
+      setPrestation("");
     } catch {
       setStatus("error");
       setNote(
@@ -136,7 +151,12 @@ export default function DevisForm() {
       </div>
       <div className={cls("prestation")}>
         <label htmlFor="prestation">Type de prestation *</label>
-        <select id="prestation" name="prestation" defaultValue="">
+        <select
+          id="prestation"
+          name="prestation"
+          value={prestation}
+          onChange={(e) => setPrestation(e.target.value)}
+        >
           <option value="">Sélectionnez une prestation…</option>
           {prestations.map((p) => (
             <option key={p}>{p}</option>
