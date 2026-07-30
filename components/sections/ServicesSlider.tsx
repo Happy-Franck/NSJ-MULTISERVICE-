@@ -8,7 +8,7 @@ import { services } from "@/lib/data";
  * Slider auto des services — défilement continu piloté en JS sur un conteneur
  * nativement scrollable (`overflow-x: auto`).
  * La liste est dupliquée ×2 pour une boucle infinie (wrap à la moitié).
- * - Desktop : pause au survol souris + reprise à la sortie.
+ * - Desktop : l'auto-défilement continue même au survol souris (pas de pause).
  * - Mobile : swipe/glissé à la main possible ; un simple tap ne fige plus
  *   l'animation (pause pendant l'interaction, reprise juste après).
  * - `prefers-reduced-motion` : pas d'auto-défilement, mais reste parcourable.
@@ -61,15 +61,11 @@ export default function ServicesSlider() {
       }, delay);
     };
 
-    // Souris (desktop) : pause au survol, reprise à la sortie.
-    const onMouseEnter = () => pause();
-    const onMouseLeave = () => resume();
+    // Desktop : pas de pause au survol → l'auto-défilement continue en hover.
     // Tactile (mobile) : pause pendant le glissé, reprise peu après le relâché.
     const onTouchStart = () => pause();
     const onTouchEnd = () => resume(1200);
 
-    scroller.addEventListener("mouseenter", onMouseEnter);
-    scroller.addEventListener("mouseleave", onMouseLeave);
     scroller.addEventListener("touchstart", onTouchStart, { passive: true });
     scroller.addEventListener("touchend", onTouchEnd, { passive: true });
     scroller.addEventListener("touchcancel", onTouchEnd, { passive: true });
@@ -77,8 +73,6 @@ export default function ServicesSlider() {
     return () => {
       cancelAnimationFrame(raf);
       if (resumeTimer) clearTimeout(resumeTimer);
-      scroller.removeEventListener("mouseenter", onMouseEnter);
-      scroller.removeEventListener("mouseleave", onMouseLeave);
       scroller.removeEventListener("touchstart", onTouchStart);
       scroller.removeEventListener("touchend", onTouchEnd);
       scroller.removeEventListener("touchcancel", onTouchEnd);
